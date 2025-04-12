@@ -6,8 +6,6 @@ This project includes a demonstration application.
 
 The demo application can be run using the provided shell script located in the `demo/target` directory.
 
-There are two ways to run the script:
-
 ##Making the script executable:##
 
 First, give the script execute permissions:
