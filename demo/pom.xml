@@ -42,14 +42,14 @@
     <build>
         <plugins>
             <!-- Plugin to run the main class -->
-            <!-- <plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <mainClass>com.techtest.recorder.gui.RecorderGui</mainClass>
+                    <mainClass>com.techtest.recorder.examples.RecorderGui</mainClass>
                 </configuration>
-            </plugin> -->
+            </plugin>
             
             <!-- Plugin to create an executable jar with dependencies -->
             <plugin>
@@ -59,7 +59,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.techtest.recorder.DisRecorderDemo</mainClass>
+                            <mainClass>com.techtest.recorder.examples.DisRecorderDemo</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

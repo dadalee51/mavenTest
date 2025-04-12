@@ -1,4 +1,4 @@
-package com.techtest.recorder.sender;
+package com.techtest.recorder.controller;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

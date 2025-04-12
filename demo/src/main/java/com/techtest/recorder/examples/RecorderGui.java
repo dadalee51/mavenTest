@@ -1,4 +1,4 @@
-package com.techtest.recorder.gui;
+package com.techtest.recorder.examples;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -30,10 +30,10 @@ import javax.swing.border.TitledBorder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.techtest.recorder.analysis.StatisticsAnalyzer;
+import com.techtest.recorder.impl.StatisticsAnalyzer;
 import com.techtest.recorder.controller.RecorderController;
 import com.techtest.recorder.factory.RecorderFactory;
-import com.techtest.recorder.sender.PduSender;
+import com.techtest.recorder.controller.PduSender;
 
 /**
  * A Swing GUI for the DIS PDU recorder and replayer.

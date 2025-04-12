@@ -1,12 +1,12 @@
 package com.techtest.recorder.factory;
 
 import com.techtest.recorder.controller.RecorderController;
-import com.techtest.recorder.recording.MulticastPduRecorder;
-import com.techtest.recorder.recording.PduRecorder;
-import com.techtest.recorder.replay.MulticastPduReplayer;
-import com.techtest.recorder.replay.PduReplayer;
-import com.techtest.recorder.storage.MemoryPduStorage;
-import com.techtest.recorder.storage.PduStorage;
+import com.techtest.recorder.impl.MulticastPduRecorder;
+import com.techtest.recorder.interfaces.PduRecorder;
+import com.techtest.recorder.impl.MulticastPduReplayer;
+import com.techtest.recorder.interfaces.PduReplayer;
+import com.techtest.recorder.impl.MemoryPduStorage;
+import com.techtest.recorder.interfaces.PduStorage;
 
 /**
  * Factory for creating recorder components.

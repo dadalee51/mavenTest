@@ -1,4 +1,4 @@
-package com.techtest;
+package com.techtest.recorder.examples;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;

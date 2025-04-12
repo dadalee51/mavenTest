@@ -1,4 +1,4 @@
-package com.techtest.recorder.storage;
+package com.techtest.recorder.interfaces;
 
 import java.util.List;
 

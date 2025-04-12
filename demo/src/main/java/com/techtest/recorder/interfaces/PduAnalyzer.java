@@ -1,4 +1,4 @@
-package com.techtest.recorder.analysis;
+package com.techtest.recorder.interfaces;
 
 import com.techtest.recorder.model.RecordedPdu;
 

@@ -1,4 +1,4 @@
-package com.techtest.recorder.replay;
+package com.techtest.recorder.interfaces;
 
 import java.util.concurrent.CompletableFuture;
 

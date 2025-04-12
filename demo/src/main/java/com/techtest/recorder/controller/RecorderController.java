@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
+import com.techtest.recorder.interfaces.PduAnalyzer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.techtest.recorder.recording.PduRecorder;
-import com.techtest.recorder.replay.PduReplayer;
-import com.techtest.recorder.storage.PduStorage;
+import com.techtest.recorder.interfaces.PduRecorder;
+import com.techtest.recorder.interfaces.PduReplayer;
+import com.techtest.recorder.interfaces.PduStorage;
 
 /**
  * Controller for managing PDU recording and replay operations.
@@ -271,7 +272,7 @@ public class RecorderController {
      * @param analyzer The analyzer to add
      * @return true if analyzer added, false otherwise
      */
-    public boolean addAnalyzer(com.techtest.recorder.analysis.PduAnalyzer analyzer) {
+    public boolean addAnalyzer(PduAnalyzer analyzer) {
         if (analyzer == null) {
             logger.error("Analyzer cannot be null");
             return false;
@@ -293,7 +294,7 @@ public class RecorderController {
      * @param analyzer The analyzer to remove
      * @return true if analyzer removed, false otherwise
      */
-    public boolean removeAnalyzer(com.techtest.recorder.analysis.PduAnalyzer analyzer) {
+    public boolean removeAnalyzer(PduAnalyzer analyzer) {
         if (analyzer == null) {
             logger.error("Analyzer cannot be null");
             return false;

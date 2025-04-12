@@ -1,13 +1,14 @@
-package com.techtest.recorder;
+package com.techtest.recorder.examples;
 
 import java.util.List;
 import java.util.Scanner;
 
+import com.techtest.recorder.controller.PduSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.techtest.recorder.analysis.PduAnalyzer;
-import com.techtest.recorder.analysis.StatisticsAnalyzer;
+import com.techtest.recorder.interfaces.PduAnalyzer;
+import com.techtest.recorder.impl.StatisticsAnalyzer;
 import com.techtest.recorder.controller.RecorderController;
 import com.techtest.recorder.factory.RecorderFactory;
 
@@ -19,7 +20,7 @@ public class DisRecorderDemo {
     
     private final RecorderController controller;
     private final Scanner scanner;
-    private com.techtest.recorder.sender.PduSender sender;
+    private PduSender sender;
     
     /**
      * Create a new DisRecorderDemo with default components.
@@ -399,7 +400,7 @@ public class DisRecorderDemo {
         }
         
         try {
-            sender = new com.techtest.recorder.sender.PduSender("239.1.2.3", 3000, rate);
+            sender = new PduSender("239.1.2.3", 3000, rate);
             sender.start();
             System.out.println("Started PDU sender at " + rate + " PDUs/second");
         } catch (Exception e) {

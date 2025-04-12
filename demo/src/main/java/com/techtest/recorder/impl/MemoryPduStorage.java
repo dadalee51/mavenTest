@@ -1,4 +1,4 @@
-package com.techtest.recorder.storage;
+package com.techtest.recorder.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.techtest.recorder.interfaces.PduStorage;
 import com.techtest.recorder.model.RecordedPdu;
 
 /**

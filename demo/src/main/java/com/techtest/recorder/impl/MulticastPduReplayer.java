@@ -1,4 +1,4 @@
-package com.techtest.recorder.replay;
+package com.techtest.recorder.impl;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -10,11 +10,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.techtest.recorder.interfaces.PduReplayer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.techtest.recorder.model.RecordedPdu;
-import com.techtest.recorder.storage.PduStorage;
+import com.techtest.recorder.interfaces.PduStorage;
 
 import edu.nps.moves.dis.Pdu;
 

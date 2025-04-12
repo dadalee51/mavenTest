@@ -1,9 +1,10 @@
-package com.techtest.recorder.analysis;
+package com.techtest.recorder.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.techtest.recorder.interfaces.PduAnalyzer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
