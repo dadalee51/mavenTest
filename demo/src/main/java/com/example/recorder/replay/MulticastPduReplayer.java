@@ -22,7 +22,7 @@ import edu.nps.moves.dis.Pdu;
  */
 public class MulticastPduReplayer implements PduReplayer {
     private static final Logger logger = LoggerFactory.getLogger(MulticastPduReplayer.class);
-    private static final String DEFAULT_MULTICAST_GROUP = "239.1.2.30";
+    private static final String DEFAULT_MULTICAST_GROUP = "239.1.2.3";
     private static final int DEFAULT_PORT = 3000;
 
     private final PduStorage storage;

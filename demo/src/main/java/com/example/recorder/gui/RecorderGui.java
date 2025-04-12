@@ -345,7 +345,7 @@ public class RecorderGui extends JFrame {
             int rate = (Integer) senderRateSpinner.getValue();
             
             try {
-                sender = new PduSender("239.1.2.30", 3000, rate);
+                sender = new PduSender("239.1.2.3", 3000, rate);
                 sender.start();
                 senderButton.setText("Stop Sender");
                 updateStatus("Started PDU sender at " + rate + " PDUs/second");

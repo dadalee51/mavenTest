@@ -399,7 +399,7 @@ public class DisRecorderDemo {
         }
         
         try {
-            sender = new com.example.recorder.sender.PduSender("239.1.2.30", 3000, rate);
+            sender = new com.example.recorder.sender.PduSender("239.1.2.3", 3000, rate);
             sender.start();
             System.out.println("Started PDU sender at " + rate + " PDUs/second");
         } catch (Exception e) {
@@ -428,7 +428,7 @@ public class DisRecorderDemo {
      * Main entry point.
      * 
      * @param args Command line arguments
-     *             args[0] (optional): Multicast group (e.g., "239.1.2.30")
+     *             args[0] (optional): Multicast group (e.g., "239.1.2.3")
      *             args[1] (optional): Port (e.g., "3000")
      */
     public static void main(String[] args) {
@@ -445,7 +445,7 @@ public class DisRecorderDemo {
                 demo = new DisRecorderDemo();
             }
         } else {
-            System.out.println("Using default network settings (239.1.2.30:3000)");
+            System.out.println("Using default network settings (239.1.2.3:3000)");
             demo = new DisRecorderDemo();
         }
         

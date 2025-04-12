@@ -27,7 +27,7 @@ import edu.nps.moves.disenum.PduType;
  */
 public class MulticastPduRecorder implements PduRecorder {
     private static final Logger logger = LoggerFactory.getLogger(MulticastPduRecorder.class);
-    private static final String DEFAULT_MULTICAST_GROUP = "239.1.2.30";
+    private static final String DEFAULT_MULTICAST_GROUP = "239.1.2.3";
     private static final int DEFAULT_PORT = 3000;
     private static final int BUFFER_SIZE = 8192;
 

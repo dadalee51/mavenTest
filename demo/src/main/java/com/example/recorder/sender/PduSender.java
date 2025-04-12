@@ -24,7 +24,7 @@ import edu.nps.moves.dis.Vector3Double;
  */
 public class PduSender {
     private static final Logger logger = LoggerFactory.getLogger(PduSender.class);
-    private static final String DEFAULT_MULTICAST_GROUP = "239.1.2.30";
+    private static final String DEFAULT_MULTICAST_GROUP = "239.1.2.3";
     private static final int DEFAULT_PORT = 3000;
     private static final int DEFAULT_RATE = 1; // PDUs per second
     
