@@ -1,4 +1,4 @@
-package com.example.recorder.recording;
+package com.techtest.recorder.recording;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -15,9 +15,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.example.recorder.analysis.PduAnalyzer;
-import com.example.recorder.model.RecordedPdu;
-import com.example.recorder.storage.PduStorage;
+import com.techtest.recorder.analysis.PduAnalyzer;
+import com.techtest.recorder.model.RecordedPdu;
+import com.techtest.recorder.storage.PduStorage;
 
 import edu.nps.moves.dis.Pdu;
 import edu.nps.moves.disenum.PduType;

@@ -1,4 +1,4 @@
-package com.example.recorder.model;
+package com.techtest.recorder.model;
 
 import edu.nps.moves.dis.Pdu;
 

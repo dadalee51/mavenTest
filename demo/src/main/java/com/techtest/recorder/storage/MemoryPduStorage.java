@@ -1,4 +1,4 @@
-package com.example.recorder.storage;
+package com.techtest.recorder.storage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.example.recorder.model.RecordedPdu;
+import com.techtest.recorder.model.RecordedPdu;
 
 /**
  * In-memory implementation of PduStorage.

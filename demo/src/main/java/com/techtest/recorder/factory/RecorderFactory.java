@@ -1,12 +1,12 @@
-package com.example.recorder.factory;
+package com.techtest.recorder.factory;
 
-import com.example.recorder.controller.RecorderController;
-import com.example.recorder.recording.MulticastPduRecorder;
-import com.example.recorder.recording.PduRecorder;
-import com.example.recorder.replay.MulticastPduReplayer;
-import com.example.recorder.replay.PduReplayer;
-import com.example.recorder.storage.MemoryPduStorage;
-import com.example.recorder.storage.PduStorage;
+import com.techtest.recorder.controller.RecorderController;
+import com.techtest.recorder.recording.MulticastPduRecorder;
+import com.techtest.recorder.recording.PduRecorder;
+import com.techtest.recorder.replay.MulticastPduReplayer;
+import com.techtest.recorder.replay.PduReplayer;
+import com.techtest.recorder.storage.MemoryPduStorage;
+import com.techtest.recorder.storage.PduStorage;
 
 /**
  * Factory for creating recorder components.

@@ -1,8 +1,8 @@
-package com.example.recorder.storage;
+package com.techtest.recorder.storage;
 
 import java.util.List;
 
-import com.example.recorder.model.RecordedPdu;
+import com.techtest.recorder.model.RecordedPdu;
 
 /**
  * Interface for PDU storage operations.

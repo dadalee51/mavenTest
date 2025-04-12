@@ -1,4 +1,4 @@
-package com.example;
+package com.techtest;
 
 public class MatrixMultiplicationBenchmark {
 

@@ -1,6 +1,6 @@
-package com.example.recorder.recording;
+package com.techtest.recorder.recording;
 
-import com.example.recorder.analysis.PduAnalyzer;
+import com.techtest.recorder.analysis.PduAnalyzer;
 
 /**
  * Interface for PDU recording operations.

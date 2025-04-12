@@ -1,13 +1,15 @@
-package com.example.recorder.controller;
+package com.techtest.recorder.controller;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.example.recorder.recording.PduRecorder;
-import com.example.recorder.replay.PduReplayer;
-import com.example.recorder.storage.PduStorage;
+import com.techtest.recorder.recording.PduRecorder;
+import com.techtest.recorder.replay.PduReplayer;
+import com.techtest.recorder.storage.PduStorage;
 
 /**
  * Controller for managing PDU recording and replay operations.
@@ -83,12 +85,13 @@ public class RecorderController {
     
     /**
      * Start replaying PDUs for a specific exercise.
-     * 
+     *
      * @param exerciseId The exercise ID
      * @param speedFactor The speed factor (e.g., 1.0 for normal speed, 2.0 for double speed)
+     * @param onComplete Consumer to be called when replay completes naturally
      * @return true if replay started, false otherwise
      */
-    public boolean startReplay(String exerciseId, double speedFactor) {
+    public boolean startReplay(String exerciseId, double speedFactor, Consumer<Void> onComplete) {
         if (replayer.isReplaying()) {
             logger.warn("Already replaying exercise: {}", replayer.getCurrentExerciseId());
             return false;
@@ -105,7 +108,15 @@ public class RecorderController {
         }
         
         try {
-            replayer.startReplay(exerciseId, speedFactor);
+            CompletableFuture<Void> future = replayer.startReplay(exerciseId, speedFactor);
+            
+            // Set up callback for when replay completes naturally
+            future.thenAccept(onComplete)
+                  .exceptionally(ex -> {
+                      logger.error("Error during replay: {}", ex.getMessage(), ex);
+                      return null;
+                  });
+                  
             logger.info("Started replaying exercise: {} at {}x speed", exerciseId, speedFactor);
             return true;
         } catch (Exception e) {
@@ -115,25 +126,67 @@ public class RecorderController {
     }
     
     /**
-     * Stop replaying PDUs.
-     * 
-     * @return true if replay stopped, false otherwise
+     * Start replaying PDUs for a specific exercise without completion callback.
+     *
+     * @param exerciseId The exercise ID
+     * @param speedFactor The speed factor (e.g., 1.0 for normal speed, 2.0 for double speed)
+     * @return true if replay started, false otherwise
      */
-    public boolean stopReplay() {
+    public boolean startReplay(String exerciseId, double speedFactor) {
+        return startReplay(exerciseId, speedFactor, null);
+    }
+    
+    /**
+     * Stop replaying PDUs.
+     *
+     * @param onStopped Consumer to be called when replay is fully stopped
+     * @return true if stop request was initiated, false otherwise
+     */
+    public boolean stopReplay(Consumer<Void> onStopped) {
         if (!replayer.isReplaying()) {
             logger.warn("Not currently replaying");
+            if (onStopped != null) {
+                onStopped.accept(null);
+            }
             return false;
         }
         
         try {
             String exerciseId = replayer.getCurrentExerciseId();
-            replayer.stopReplay();
-            logger.info("Stopped replaying exercise: {}", exerciseId);
+            logger.info("Initiating stop of replay for exercise: {}", exerciseId);
+            
+            // Get the future that represents the completion of the stop operation
+            CompletableFuture<Void> future = replayer.stopReplay();
+            
+            // Set up callback for when stop completes
+            // This ensures the GUI is only updated after replay is fully stopped
+            future.whenComplete((result, ex) -> {
+                if (ex != null) {
+                    logger.error("Error stopping replay: {}", ex.getMessage(), ex);
+                } else {
+                    logger.info("Stopped replaying exercise: {}", exerciseId);
+                }
+                
+                // In either case, invoke the callback to update the UI
+                if (onStopped != null) {
+                    onStopped.accept(null);
+                }
+            });
+            
             return true;
         } catch (Exception e) {
             logger.error("Failed to stop replay: {}", e.getMessage(), e);
             return false;
         }
+    }
+    
+    /**
+     * Stop replaying PDUs without completion callback.
+     *
+     * @return true if stop request was initiated, false otherwise
+     */
+    public boolean stopReplay() {
+        return stopReplay(null);
     }
     
     /**
@@ -218,7 +271,7 @@ public class RecorderController {
      * @param analyzer The analyzer to add
      * @return true if analyzer added, false otherwise
      */
-    public boolean addAnalyzer(com.example.recorder.analysis.PduAnalyzer analyzer) {
+    public boolean addAnalyzer(com.techtest.recorder.analysis.PduAnalyzer analyzer) {
         if (analyzer == null) {
             logger.error("Analyzer cannot be null");
             return false;
@@ -240,7 +293,7 @@ public class RecorderController {
      * @param analyzer The analyzer to remove
      * @return true if analyzer removed, false otherwise
      */
-    public boolean removeAnalyzer(com.example.recorder.analysis.PduAnalyzer analyzer) {
+    public boolean removeAnalyzer(com.techtest.recorder.analysis.PduAnalyzer analyzer) {
         if (analyzer == null) {
             logger.error("Analyzer cannot be null");
             return false;

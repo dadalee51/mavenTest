@@ -1,4 +1,4 @@
-package com.example.recorder.analysis;
+package com.techtest.recorder.analysis;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.example.recorder.model.RecordedPdu;
+import com.techtest.recorder.model.RecordedPdu;
 
 import edu.nps.moves.dis.Pdu;
 

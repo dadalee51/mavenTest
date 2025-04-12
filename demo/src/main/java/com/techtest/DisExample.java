@@ -1,4 +1,4 @@
-package com.example;
+package com.techtest;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;

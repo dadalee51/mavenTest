@@ -1,4 +1,4 @@
-package com.example.recorder.gui;
+package com.techtest.recorder.gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -30,10 +30,10 @@ import javax.swing.border.TitledBorder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.example.recorder.analysis.StatisticsAnalyzer;
-import com.example.recorder.controller.RecorderController;
-import com.example.recorder.factory.RecorderFactory;
-import com.example.recorder.sender.PduSender;
+import com.techtest.recorder.analysis.StatisticsAnalyzer;
+import com.techtest.recorder.controller.RecorderController;
+import com.techtest.recorder.factory.RecorderFactory;
+import com.techtest.recorder.sender.PduSender;
 
 /**
  * A Swing GUI for the DIS PDU recorder and replayer.
@@ -60,6 +60,9 @@ public class RecorderGui extends JFrame {
     private JList<String> exerciseList;
     private DefaultListModel<String> exerciseListModel;
     private JTextArea statusArea;
+    
+    // State tracking
+    private volatile boolean replayStopInProgress = false;
     
     /**
      * Create a new RecorderGui with default components.
@@ -248,10 +251,15 @@ public class RecorderGui extends JFrame {
         statusPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Status", TitledBorder.LEFT, TitledBorder.TOP));
         
-        // Status area
+        // Status area with enhanced scrolling
         statusArea = new JTextArea();
         statusArea.setEditable(false);
+        statusArea.setLineWrap(true);
+        statusArea.setWrapStyleWord(true);
         JScrollPane statusScrollPane = new JScrollPane(statusArea);
+        statusScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        statusScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        statusScrollPane.setPreferredSize(new java.awt.Dimension(800, 150));
         statusPanel.add(statusScrollPane, BorderLayout.CENTER);
         
         // Add panels to main panel
@@ -313,7 +321,23 @@ public class RecorderGui extends JFrame {
             }
             
             double speedFactor = (Double) speedFactorSpinner.getValue();
-            boolean success = controller.startReplay(exerciseId, speedFactor);
+            
+            // Reset the stop in progress flag when starting a new replay
+            replayStopInProgress = false;
+            
+            // Use the controller's startReplay with a completion callback
+            // This ensures the GUI state is updated when replay ends naturally
+            boolean success = controller.startReplay(exerciseId, speedFactor, result -> {
+                // This runs when replay completes naturally
+                SwingUtilities.invokeLater(() -> {
+                    // Only update UI if a manual stop isn't already in progress
+                    if (!replayStopInProgress && replayButton.getText().equals("Stop Replay")) {
+                        replayButton.setText("Start Replay");
+                        updateStatus("Replay completed: " + exerciseId);
+                        logger.info("Replay completed naturally: {}", exerciseId);
+                    }
+                });
+            });
             
             if (success) {
                 replayButton.setText("Stop Replay");
@@ -324,15 +348,33 @@ public class RecorderGui extends JFrame {
                 logger.error("Failed to start replay for exercise: {}", exerciseId);
             }
         } else {
-            boolean success = controller.stopReplay();
+            // Mark that a stop is in progress to prevent the natural completion
+            // handler from also updating the UI
+            replayStopInProgress = true;
             
-            if (success) {
-                replayButton.setText("Start Replay");
-                updateStatus("Stopped replaying");
-                logger.info("Stopped replaying");
-            } else {
+            // Use the controller's stopReplay with a completion callback
+            // This ensures the GUI is only updated after replay is fully stopped
+            replayButton.setEnabled(false); // Disable button while stopping
+            updateStatus("Stopping replay...");
+            
+            boolean stopInitiated = controller.stopReplay(result -> {
+                // This runs when stop completes
+                SwingUtilities.invokeLater(() -> {
+                    replayButton.setText("Start Replay");
+                    replayButton.setEnabled(true);
+                    updateStatus("Stopped replaying");
+                    logger.info("Stopped replaying");
+                    // Reset the flag after UI is updated
+                    replayStopInProgress = false;
+                });
+            });
+            
+            if (!stopInitiated) {
+                replayButton.setEnabled(true);
                 updateStatus("Failed to stop replay");
                 logger.error("Failed to stop replay");
+                // Reset the flag if stop failed
+                replayStopInProgress = false;
             }
         }
     }
@@ -490,7 +532,20 @@ public class RecorderGui extends JFrame {
      */
     private void updateStatus(String status) {
         statusArea.append(status + "\n");
+        
+        // Ensure the latest messages are always visible by scrolling to the bottom
         statusArea.setCaretPosition(statusArea.getDocument().getLength());
+        
+        // Limit the number of lines to prevent memory issues with very long logs
+        if (statusArea.getLineCount() > 1000) {
+            try {
+                int endOfFirstLine = statusArea.getLineEndOffset(0);
+                statusArea.replaceRange("", 0, endOfFirstLine);
+            } catch (Exception e) {
+                // Ignore any errors during trimming
+                logger.warn("Error trimming status area: {}", e.getMessage());
+            }
+        }
     }
     
     /**
@@ -503,6 +558,7 @@ public class RecorderGui extends JFrame {
         }
         
         if (controller.isReplaying()) {
+            // We don't need to wait for the future to complete here since the application is exiting
             controller.stopReplay();
             logger.info("Stopped replay on exit");
         }
