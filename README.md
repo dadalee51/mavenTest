@@ -10,12 +10,13 @@ There are two ways to run the script:
 
 **Making the script executable:**
 
-   First, give the script execute permissions:
+      First, give the script execute permissions:
     ```bash
     cd demo/target
     chmod +x run.sh
     ```
-   Then, run the script directly:
+    
+      Then, run the script directly:
     ```bash
     ./run.sh
     ```
