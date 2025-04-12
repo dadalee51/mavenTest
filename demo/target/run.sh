@@ -4,8 +4,8 @@
 
 # --- Configuration ---
 JAR_FILE="dis-demo-1.0-SNAPSHOT-jar-with-dependencies.jar"
-DEFAULT_MAIN_CLASS="com.techtest.recorder.DisRecorderDemo"
-GUI_CLASS="com.techtest.recorder.gui.RecorderGui"
+DEFAULT_MAIN_CLASS="com.techtest.recorder.examples.DisRecorderDemo"
+GUI_CLASS="com.techtest.recorder.examples.RecorderGui"
 
 # --- Script Logic ---
 
