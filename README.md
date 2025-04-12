@@ -8,15 +8,15 @@ The demo application can be run using the provided shell script located in the `
 
 There are two ways to run the script:
 
-**Making the script executable:**
+##Making the script executable:##
 
-      First, give the script execute permissions:
-    ```bash
-    cd demo/target
-    chmod +x run.sh
-    ```
-    
-      Then, run the script directly:
-    ```bash
-    ./run.sh
-    ```
+First, give the script execute permissions:
+```bash
+cd demo/target
+chmod +x run.sh
+```
+
+Then, run the script directly:
+```bash
+./run.sh
+```
